@@ -9,47 +9,36 @@
 import Foundation
 struct StoryBrain {
     let stories = [
-        Story(t: "you see a fork in the road", c1:"take a left",c2:"take a right"),
-        Story(t:"you see a tiger",c1: "shout for help",c2: "play dead"),
+        Story(title:"you see a fork in the road", choice1: "take a left",choice1Destination:1,choice2:"take a right", choice2Destination:2),
+        Story(title:"you see a tiger",choice1: "shout for help",choice1Destination:0 ,choice2: "play dead", choice2Destination:0),
         
-        Story(t:"you find a tresaure chest", c1: "open it", c2: "check for traps")
+        Story(title:"you find a tresaure chest",choice1: "open it",choice1Destination:0 ,choice2: "check for traps",choice2Destination:0)
     ]
-    var uanswer = ""
+   
     var position = 0;
-    mutating func checkChoice(_ userAnswer: String) -> Bool  {
-    if userAnswer == (stories[position].choice1   ){
-        nextText();
-        return true
-        }
-    else if userAnswer == stories[position].choice2
-    {
-        position += 2
-        return true
-      }
-        nextText()
-      return false
-}
-    mutating func nextText(){
-        if position + 1 < stories.count{
-            position += 1
-        }
-        else {
-            position = 0;
-        }
+    func getStoryTitle() -> String {
+        return stories[position].title
     }
     
-    func getLabel()-> String{
-        return stories[position].title;
-        
+    func getChoice1() -> String {
+        return stories[position].choice1
     }
-    func getChoice1()-> String{
-        return stories[position].choice1;
-        
+    
+    func getChoice2() -> String {
+        return stories[position].choice2
     }
-    func getChoice2()-> String{
-        return stories[position].choice2;
+    
+    mutating func nextStory(userChoice: String) {
         
+        let currentStory = stories[position]
+        if userChoice == currentStory.choice1 {
+            position = currentStory.choice1Destination
+        } else if userChoice == currentStory.choice2 {
+            position = currentStory.choice2Destination
+        }
     }
+
+    
 }
 
 
